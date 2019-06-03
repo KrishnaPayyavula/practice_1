@@ -1,0 +1,40 @@
+START THE SERVICE AUTOMATICALLY ON SYSTEM REBOOT / RESTART
+
+MongoDB Install
+Windows
+(1) Install MongoDB
+
+(2) Add bin to path
+
+(3) Create c:\data\db
+
+(4) Create c:\data\log
+
+(5) Create c:\data\mongod.cfg with contents ..
+
+systemLog:
+    destination: file
+    path: c:\data\log\mongod.log
+storage:
+    dbPath: c:\data\db
+(6) To create service that will auto start on reboot .. RUN AS ADMIN ..
+
+sc.exe create MongoDB binPath= "\"C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe\" --service --config=\"C:\data\mongod.cfg\"" DisplayName= "MongoDB" start= "auto"
+(7) Start the service .. RUN AS ADMIN ..
+
+net start MongoDB
+IMPORTANT: Even if this says 'The MongoDB service was started successfully' it can fail
+
+To double check open Control Panel > Services, ensure the status of the MongoDB service is 'Running'
+
+If not, check your log file at C:\data\log\mongod.log for the reason for failure and fix it
+
+(Do not start MongoDB via Control Panel > Services, use .. net start MongoDB)
+
+(8) Finally, restart your machine with MongoDB running and it will still be running on restart
+
+If you ever want to kill it ..
+
+net stop MongoDB
+
+sc.exe delete MongoDB
