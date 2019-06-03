@@ -1,0 +1,51 @@
+=====================================================
+Steps to follow to isntall mongodb in the windows PC
+=====================================================
+Install community version of Mongodb and run the MSI
+Run it as a windows service
+Install compass manager
+add C:\Program Files\MongoDB\Server\4.0\bin to system environmental varialbes
+connect to it by typing mongo in the command propt with admin previlages
+=====================================================
+Enabling Access Control for the mongoDb server
+=====================================================
+create users that you want with preffered roles in the admin db with the following command
+
+use admin
+db.createUser(
+  {
+    user: "admin",
+    pwd: "passme123",
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+  }
+)
+
+we have different set of roles please check and create role based on your requirement.
+
+and 
+
+Goto "mongod.cfg" configuration file which is present in the bin folder of "C:\Program Files\MongoDB\Server\4.0\bin" and edit it with admin previlages in notepad++ and 
+
+remove the # tag in front of security and copy the following code bwlow the security line.
+
+
+  security:
+   authorization: enabled
+
+
+and save it.
+
+Go to view local services in the PC and find the mongoDB server and restart the server to see the changes.
+
+=====================================================
+Binding IP address to the default localhost
+=====================================================
+
+Goto "mongod.cfg" configuration file which is present in the bin folder of C:\Program Files\MongoDB\Server\4.0\bin and edit it with admin previlages in notepad++ and
+
+repalce the "bindIp: 127.0.0.1" with the following line of code bindIp: "127.0.0.1,$$$$.$$$$.$$$$.$$$$" {$$$$.$$$$.$$$$.$$$$ is the ip address of pc that you want to bind} and save it .
+
+Go to view local services in the PC and find the mongoDB server and restart the server to see the changes.
+ 
+
+
