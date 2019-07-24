@@ -1,0 +1,1 @@
+This is a copy file to test the copying in branches
